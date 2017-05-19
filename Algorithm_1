@@ -1,0 +1,24 @@
+public class Algorithm_1 {
+
+	private Collection<Cirkel> cirkels;
+	
+	public Algorithm_1(Collection<Cirkel> cirkels_){
+		this. cirkels = cirkels_;
+	}
+	
+	public Collection<Punt> solve(){
+		Collection<Punt> snijpunten = new LinkedList<Punt>();
+		for (Cirkel i : this.cirkels){
+			for (Cirkel j : this.cirkels){
+				if (i.intersect(j))	{
+					for (Punt k : i.getSnijpunten(j)){
+						if (!snijpunten.contains(k))	snijpunten.add(k);
+					}
+				}
+			}
+		}
+		return snijpunten;
+	}
+	
+	
+}
