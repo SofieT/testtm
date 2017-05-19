@@ -1,0 +1,30 @@
+import java.util.ArrayList;
+import java.util.Collection;
+
+
+public class Main {
+
+public static void main(String[] args) {
+		
+		Cirkel c1 = new Cirkel(2, 2, 2);
+		Cirkel c2 = new Cirkel(4, 2, 1);
+		Cirkel c3 = new Cirkel(7, 2, 1);
+		Collection<Cirkel> test = new ArrayList<Cirkel>();
+		test.add(c1);
+		test.add(c2);
+		test.add(c3);
+		
+		Algorithm_1 algo = new Algorithm_1(test);
+		Collection<Punt> result = new ArrayList<Punt>();
+		result = algo.solve();
+		System.out.println(result.size());
+		for (Punt p : result)
+			System.out.print(p.getX() + "  " + p.getY() + "\n");
+		
+		
+		
+
+	}
+	
+	
+}
