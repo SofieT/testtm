@@ -1,0 +1,54 @@
+import java.util.Collection;
+import java.util.LinkedList;
+
+
+public class Cirkel {
+
+	private Punt midden;
+	private double radius;
+	
+	public Cirkel(double x, double y, double r){
+		this.midden = new Punt(x, y);
+		this.radius = r;
+	}
+	
+	public Punt getMidden(){
+		return this.midden;
+	}
+	
+	public double getRadius(){
+		return this.radius;
+	}
+	
+	/**
+	 * Indien de cirkels samenvallen worden ze niet als snijdend beschouwd 
+	 * en geeft het algoritme geen snijpunten terug
+	 */
+	public boolean intersect(Cirkel c){
+		double d = this.midden.distance(c.getMidden());
+		//cirkels zijn ofwel ver uit elkaar, ofwel samenvallend, ofwel ligt een in een andere, ofwel snijdend
+		if (d > (this.radius + c.getRadius()))		return false;
+		else 
+			if ((this.radius == c.getRadius()) && (this.radius == c.getRadius()))		return false; 
+			else 
+				if (d < (Math.abs(this.radius - c.getRadius())))	return false;
+				else
+					return true;
+	}
+	
+	public Collection<Punt> getSnijpunten(Cirkel c){
+		Collection<Punt> snijpunten = new LinkedList<Punt>();
+		double d = this.midden.distance(c.getMidden());
+				
+		//formules http://stackoverflow.com/questions/3349125/circle-circle-intersection-points
+		
+		double a = (Math.pow(this.radius, 2) - Math.pow(c.getRadius(), 2) + Math.pow(d, 2))/ (2*d);
+		double h = Math.sqrt(Math.pow(this.radius, 2) - Math.pow(a, 2));
+		double tempx = h*(c.getMidden().getY() - this.midden.getY())/d;
+		double tempy = h*(c.getMidden().getX() - this.midden.getX())/d;
+		snijpunten.add(new Punt(c.getMidden().getX() + tempx, c.getMidden().getY() - tempy));
+		snijpunten.add(new Punt(c.getMidden().getX() - tempx, c.getMidden().getY() + tempy));
+		return snijpunten;
+	}
+	
+}
