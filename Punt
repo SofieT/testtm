@@ -21,4 +21,10 @@ public class Punt {
 		return Math.sqrt(Math.pow((this.x - p.getX()), 2)+ Math.pow((this.y - p.getY()), 2));
 	}
 	
+	@Override
+	public boolean equals(Object p){
+		if (p instanceof Punt)
+			return (this.x == ((Punt) p).getX()) && (this.y == ((Punt) p).getY());
+		else return false;
+	}
 }
