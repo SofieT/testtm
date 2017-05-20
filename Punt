@@ -1,8 +1,8 @@
 
 public class Punt {
 
-	double x;
-	double y;
+	private double x;
+	private double y;
 	
 	public Punt(double x_, double y_){
 		this.x = x_;
