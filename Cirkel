@@ -37,17 +37,29 @@ public class Cirkel {
 	}
 	
 	public Collection<Punt> getSnijpunten(Cirkel c){
+		//TODO
+		//?? https://fypandroid.wordpress.com/2011/07/03/how-to-calculate-the-intersection-of-two-circles-java/
+		// NEE :http://2000clicks.com/mathhelp/GeometryConicSectionCircleIntersection.aspx
 		Collection<Punt> snijpunten = new LinkedList<Punt>();
 		double d = this.midden.distance(c.getMidden());
-				
-		//formules http://stackoverflow.com/questions/3349125/circle-circle-intersection-points
+		double k = (1/4)*Math.sqrt((Math.pow(this.radius + c.getRadius(), 2) - Math.pow(d, 2))*(Math.pow(d, 2) - Math.pow(this.radius - c.getRadius(), 2)));
 		
-		double a = (Math.pow(this.radius, 2) - Math.pow(c.getRadius(), 2) + Math.pow(d, 2))/ (2*d);
-		double h = Math.sqrt(Math.pow(this.radius, 2) - Math.pow(a, 2));
-		double tempx = h*(c.getMidden().getY() - this.midden.getY())/d;
-		double tempy = h*(c.getMidden().getX() - this.midden.getX())/d;
-		snijpunten.add(new Punt(c.getMidden().getX() + tempx, c.getMidden().getY() - tempy));
-		snijpunten.add(new Punt(c.getMidden().getX() - tempx, c.getMidden().getY() + tempy));
+		double tx1 = (1/2)*(c.getMidden().getX() + this.midden.getX());
+		double ty1 = (1/2)*(c.getMidden().getY() + this.midden.getY());
+		double t2 = (1/2)*(Math.pow(this.radius, 2)- Math.pow(c.getRadius(), 2))/Math.pow(d, 2);
+		double t3 = 2*k/Math.pow(d, 2);
+		
+		double x = c.getMidden().getX() - this.midden.getX();
+		double y = c.getMidden().getY() - this.midden.getY();
+		
+		double x1 = tx1 + x*t2 + y*t3;
+		double x2 = tx1 + x*t2 - y*t3;
+		double y1 = ty1 + y*t2 + x*t3;
+		double y2 = ty1 + y*t2 - x*t3;
+		
+		snijpunten.add(new Punt(x1, y1));
+		snijpunten.add(new Punt(x2, y2));
+		
 		return snijpunten;
 	}
 	
