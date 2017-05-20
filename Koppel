@@ -1,0 +1,19 @@
+
+public class Koppel {
+
+	private Double key;
+	private Cirkel value;
+	
+	public Koppel(Double d, Cirkel c){
+		this.key = d;
+		this.value = c;
+	}
+	
+	public Double getKey(){
+		return this.key;
+	}
+	
+	public Cirkel getValue(){
+		return this.value;
+	}
+}
