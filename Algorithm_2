@@ -1,0 +1,56 @@
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+
+
+public class Algorithm_2 {
+
+	private Collection<Cirkel> cirkels;
+	
+	
+	public Algorithm_2(Collection<Cirkel> c){
+		this.cirkels = c;
+	}
+	
+	public Collection<Punt> solve(){
+		Collection<Punt> snijpunten = new LinkedList<Punt>();
+		BST<Double, Cirkel> tree = new BST<Double, Cirkel>();
+		ArrayList<Koppel> lijst = new ArrayList<Koppel>();
+		
+		for (Cirkel i : this.cirkels){
+			Double t1 = i.getMidden().getX() - i.getRadius();
+			lijst.add(new Koppel(t1, i));
+			Double t2 = i.getMidden().getX() + i.getRadius();
+			lijst.add(new Koppel(t2, i));
+		}
+		
+		//TODO sorteer L
+		
+		for (Koppel j : lijst){
+			
+			Cirkel boven = null;
+			Cirkel onder = null;
+			
+			if (!tree.isEmpty()){
+				//beginpunt
+				if (j.getKey() == j.getValue().getMidden().getX() - j.getValue().getRadius()){
+					boven = tree.get(tree.ceiling(j.getValue().getMidden().getY()));
+					onder = tree.get(tree.floor(j.getValue().getMidden().getY()));
+					tree.put(j.getValue().getMidden().getY(), j.getValue());
+				}
+				//eindpunt
+				else{
+					tree.delete(j.getValue().getMidden().getY());
+					boven = tree.get(tree.ceiling(j.getValue().getMidden().getY()));
+					onder = tree.get(tree.floor(j.getValue().getMidden().getY()));
+				}
+			
+				//TODO dubbels eruit halen
+				if (j.getValue().intersect(boven))		snijpunten.addAll(j.getValue().getSnijpunten(boven));
+				if (j.getValue().intersect(onder))		snijpunten.addAll(j.getValue().getSnijpunten(onder));
+			}
+		}
+		return snijpunten;
+	}
+	
+}
